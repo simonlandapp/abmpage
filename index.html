@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Land App for The Wildlife Trusts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony / Earthy Neutrals -->
+    <!-- Application Structure Plan: A single-page, vertical scrolling layout with a sticky navigation bar for quick access to 'Features' and 'Case Study' sections. The core is an interactive tab-style component for the 5 key features, allowing users to click and reveal details one at a time. This focused approach prevents information overload. A representative bar chart visualizes the app's efficiency benefits, followed by a clearly structured case study with a simple CSS-based flow diagram. This structure guides the user from the 'what' (features) to the 'why' (benefits/chart) to the 'how' (case study), creating a persuasive narrative. -->
+    <!-- Visualization & Content Choices: 1. Features Section: Goal=Organize/Inform, Method=Interactive Tabs (HTML/JS), Interaction=Click to reveal content, Justification=Engaging and focused exploration of product features. 2. Efficiency Gains Chart: Goal=Compare/Impact, Method=Horizontal Bar Chart, Interaction=Hover tooltips, Justification=Visually quantifies the key benefit of time-saving, making it more impactful than text alone, Library=Chart.js/Canvas. 3. Case Study Process: Goal=Inform, Method=CSS Flexbox Diagram, Interaction=Subtle hover effects, Justification=Simplifies and visualizes the successful workflow of an existing user, enhancing credibility. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .feature-button.active {
+            background-color: #22543d;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-green-800">🌳 Land App</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#features" class="text-stone-600 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Key Features</a>
+                        <a href="#impact" class="text-stone-600 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Impact</a>
+                        <a href="#success-story" class="text-stone-600 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Success Story</a>
+                        <a href="#onboarding" class="text-stone-600 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Onboarding</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="py-20 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-green-900">A Unified Platform for Nature Recovery</h1>
+                <p class="mt-4 max-w-3xl mx-auto text-lg text-stone-600">Transforming a "patchwork quilt" of systems into a single, collaborative platform to achieve the national vision of The Wildlife Trusts.</p>
+            </div>
+        </section>
+
+        <section id="features" class="py-20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-green-900">Top 5 Features for Your Mission</h2>
+                    <p class="mt-2 text-stone-600">Click on a feature to explore how Land App addresses your core challenges.</p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+                    <button data-feature="map" class="feature-button active flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+                        <span class="text-3xl mb-2">🗺️</span>
+                        <span class="font-semibold text-center text-sm">Centralised Map</span>
+                    </button>
+                    <button data-feature="mobile" class="feature-button flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+                        <span class="text-3xl mb-2">📱</span>
+                        <span class="font-semibold text-center text-sm">Mobile Field Data</span>
+                    </button>
+                    <button data-feature="bng" class="feature-button flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+                        <span class="text-3xl mb-2">🌿</span>
+                        <span class="font-semibold text-center text-sm">BNG Toolkit</span>
+                    </button>
+                    <button data-feature="permissions" class="feature-button flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+                        <span class="text-3xl mb-2">🔒</span>
+                        <span class="font-semibold text-center text-sm">Role-Based Permissions</span>
+                    </button>
+                    <button data-feature="import" class="feature-button flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+                        <span class="text-3xl mb-2">🔄</span>
+                        <span class="font-semibold text-center text-sm">GIS Data Import</span>
+                    </button>
+                </div>
+
+                <div id="feature-display" class="bg-white p-8 rounded-lg shadow-lg min-h-[250px] transition-opacity duration-500">
+                    <h3 id="feature-title" class="text-2xl font-bold text-green-800 mb-4"></h3>
+                    <ul id="feature-points" class="list-disc list-inside space-y-2 text-stone-700">
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="impact" class="py-20 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-green-900">Visualising the Impact</h2>
+                    <p class="mt-2 text-stone-600">Land App shifts your team's focus from administration to conservation by dramatically improving efficiency. This chart illustrates a typical reallocation of time and resources after adoption.</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="impactChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="success-story" class="py-20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-green-900">Blueprint for Success: The Surrey Wildlife Trust</h2>
+                    <p class="mt-2 text-stone-600">Your colleagues are already demonstrating the power of Land App for landscape-scale conservation. They use the platform as their "de facto tool" to achieve a cohesive, strategic vision.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="font-bold text-lg text-green-800">1. Profile Land Systematically</h4>
+                        <p class="text-stone-600 mt-2">Using the extensive data layer library to understand flood zones and priority habitats before engaging landowners.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="font-bold text-lg text-green-800">2. Collaborate in Real-Time</h4>
+                        <p class="text-stone-600 mt-2">Sharing maps directly with landowners to co-create baseline assessments and management plans.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="font-bold text-lg text-green-800">3. Achieve a Strategic Vision</h4>
+                        <p class="text-stone-600 mt-2">Integrating individual site plans into a cohesive, "catchment-based approach" that mirrors national goals.</p>
+                    </div>
+                </div>
+                 <div class="text-center mt-12">
+                     <p class="text-lg font-medium text-stone-700 bg-green-100 border-l-4 border-green-500 p-4 rounded-md">Their success provides a working model for how Land App can be deployed effectively across the entire Wildlife Trusts network.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="onboarding" class="py-20 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-green-900">Your Custom Onboarding Course</h2>
+                    <p class="mt-2 text-stone-600">We've curated a selection of resources from our <a href="https://help.thelandapp.com/en/" target="_blank" class="text-green-700 hover:underline font-medium">Help Centre</a> to provide a clear path for your team to get up and running.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-stone-50 p-6 rounded-lg border border-stone-200 hover:shadow-lg transition-shadow">
+                        <h3 class="font-bold text-lg text-green-800 mb-3">Module 1: Setting Up Your Workspace</h3>
+                        <ul class="list-disc list-inside space-y-2 text-stone-700 text-sm">
+                            <li><a href="https://help.thelandapp.com/en/articles/3557728-how-to-import-data-to-the-land-app" target="_blank" class="hover:underline text-green-700">Import your existing GIS data (Shapefiles, KML, etc.).</a></li>
+                        </ul>
+                    </div>
+                    <div class="bg-stone-50 p-6 rounded-lg border border-stone-200 hover:shadow-lg transition-shadow">
+                        <h3 class="font-bold text-lg text-green-800 mb-3">Module 2: Collaborating Across the Trusts</h3>
+                        <ul class="list-disc list-inside space-y-2 text-stone-700 text-sm">
+                            <li><a href="https://help.thelandapp.com/en/articles/2788389-how-to-share-a-map-invite-collaborators-or-change-these-settings" target="_blank" class="hover:underline text-green-700">Master sharing maps and setting user permissions.</a></li>
+                        </ul>
+                    </div>
+                    <div class="bg-stone-50 p-6 rounded-lg border border-stone-200 hover:shadow-lg transition-shadow">
+                        <h3 class="font-bold text-lg text-green-800 mb-3">Module 3: Empowering Your Field Teams</h3>
+                        <ul class="list-disc list-inside space-y-2 text-stone-700 text-sm">
+                            <li><a href="https://thelandapp.com/land-app-mobile/" target="_blank" class="hover:underline text-green-700">Get started with Land App Mobile for field surveys.</a></li>
+                        </ul>
+                    </div>
+                    <div class="bg-stone-50 p-6 rounded-lg border border-stone-200 hover:shadow-lg transition-shadow">
+                        <h3 class="font-bold text-lg text-green-800 mb-3">Module 4: Mastering Biodiversity Net Gain</h3>
+                        <ul class="list-disc list-inside space-y-2 text-stone-700 text-sm">
+                            <li><a href="https://help.thelandapp.com/en/articles/8836987-toolbox-biodiversity-net-gain-estimator" target="_blank" class="hover:underline text-green-700">Guide to using the BNG Estimator Tool.</a></li>
+                            <li><a href="https://help.thelandapp.com/en/articles/9094294-toolbox-auto-populate-bng-metric-calculator" target="_blank" class="hover:underline text-green-700">Auto-populate the official BNG Metric Calculator.</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-green-900 text-white mt-10">
+        <div class="max-w-6xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; 2025 Land App. A unified platform for a wilder future.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const featuresData = {
+                map: {
+                    title: 'Centralised "Map of Maps"',
+                    points: [
+                        "Gain a single, live, national overview of all 46 Trusts' land holdings.",
+                        "Eliminate data silos and standardize mapping with authoritative Ordnance Survey and Land Registry data.",
+                        "Enable real-time collaboration between Trusts, ensuring everyone is working from a single source of truth."
+                    ]
+                },
+                mobile: {
+                    title: 'Land App Mobile for Field Data',
+                    points: [
+                        "Empower rangers and volunteers to systematically capture crucial ecological data on-site, even when offline.",
+                        "Replace handwritten notes with GPS-accurate points, lines, polygons, and geo-tagged photos.",
+                        "Use structured survey templates (e.g., General Data Collection, Healthy Hedgerows) for consistent data."
+                    ]
+                },
+                bng: {
+                    title: 'Integrated Biodiversity Net Gain (BNG) Toolkit',
+                    points: [
+                        "Turn the complexity of BNG into a strategic opportunity for conservation and revenue.",
+                        "Instantly calculate the baseline and potential uplift of your sites with the built-in BNG Estimator Tool.",
+                        "Dramatically reduce admin time by auto-populating the official BNG Metric Calculator spreadsheet."
+                    ]
+                },
+                permissions: {
+                    title: 'Granular, Role-Based Permissions',
+                    points: [
+                        "Address the critical need for data security, especially for confidential species records.",
+                        "Maintain complete control over who can view, edit, or only add data to a map.",
+                        "Assign specific roles to administrators, managers, and volunteers to protect sensitive information."
+                    ]
+                },
+                import: {
+                    title: 'Seamless GIS Data Import',
+                    points: [
+                        "Protect your investment in historical data by easily importing existing GIS files (ESRI Shapefiles, KML, GeoJSON).",
+                        "Consolidate decades of valuable ecological surveys into one secure, accessible, and queryable platform.",
+                    ]
+                }
+            };
+
+            const featureButtons = document.querySelectorAll('.feature-button');
+            const featureTitle = document.getElementById('feature-title');
+            const featurePoints = document.getElementById('feature-points');
+
+            function updateFeatureDisplay(featureKey) {
+                const data = featuresData[featureKey];
+                if (data) {
+                    featureTitle.textContent = data.title;
+                    featurePoints.innerHTML = data.points.map(point => `<li>${point}</li>`).join('');
+                }
+            }
+
+            featureButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    featureButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    const featureKey = button.getAttribute('data-feature');
+                    updateFeatureDisplay(featureKey);
+                });
+            });
+
+            updateFeatureDisplay('map');
+
+            const ctx = document.getElementById('impactChart').getContext('2d');
+            const impactChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Before Land App', 'After Land App'],
+                    datasets: [{
+                        label: 'Admin & Reporting',
+                        data: [60, 20],
+                        backgroundColor: '#a3a3a3',
+                        borderColor: '#737373',
+                        borderWidth: 1
+                    }, {
+                        label: 'Field Work & Conservation',
+                        data: [40, 80],
+                        backgroundColor: '#166534',
+                        borderColor: '#14532d',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Resource Allocation: Shifting Time from Desk to Field',
+                            font: { size: 16 },
+                            color: '#333'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw}%`;
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            max: 100,
+                             ticks: {
+                                callback: function(value) {
+                                    return value + "%"
+                                }
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                        }
+                    }
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
+
+
